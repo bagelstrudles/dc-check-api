@@ -1,0 +1,16 @@
+{
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
+  ],
+  "env": {
+    "VITE_API_URL": "http://64.23.235.7:3000/api"
+  },
+  "build": {
+    "env": {
+      "VITE_API_URL": "http://64.23.235.7:3000/api"
+    }
+  }
+} 
