@@ -1,12 +1,80 @@
-# React + Vite
+# DC Check Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React-based frontend application for tracking Pokemon card prices and managing inventory.
 
-Currently, two official plugins are available:
+## Features
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- User authentication and authorization
+- Admin dashboard for price management
+- Automated daily price updates from PriceCharting
+- Price history tracking for different card conditions
+- Role-based access control
 
-## Expanding the ESLint configuration
+## Setup
 
-If you are developing a production application, we recommend using TypeScript and enable type-aware lint rules. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+1. Install dependencies:
+```bash
+npm install
+```
+
+2. Set up environment variables:
+Create a `.env` file with:
+```
+VITE_API_URL=http://64.23.235.7:3000/api
+```
+
+3. Run development server:
+```bash
+npm run dev
+```
+
+## Automated Price Updates
+
+The application includes automated price updates from PriceCharting. To set up:
+
+1. Deploy cron job:
+```bash
+chmod +x scripts/deploy-cron.sh
+./scripts/deploy-cron.sh
+```
+
+2. Monitor logs:
+```bash
+ssh root@64.23.235.7 "tail -f /var/log/price-updates.log"
+```
+
+## Deployment
+
+The application is deployed using Vercel:
+
+1. Install Vercel CLI:
+```bash
+npm install -g vercel
+```
+
+2. Deploy:
+```bash
+vercel
+```
+
+## Project Structure
+
+- `/src` - Source code
+  - `/components` - React components
+  - `/utils` - Utility functions
+  - `/api` - API integration
+  - `/pages` - Page components
+- `/scripts` - Automation scripts
+  - `priceUpdate.js` - Price update script
+  - `cronPriceUpdate.sh` - Cron job script
+  - `deploy-cron.sh` - Deployment script
+
+## Contributing
+
+1. Create a feature branch
+2. Make changes
+3. Submit a pull request
+
+## License
+
+MIT
