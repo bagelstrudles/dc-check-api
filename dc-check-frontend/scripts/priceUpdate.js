@@ -40,15 +40,32 @@ const processCSV = async () => {
             epid: record.epid,
             upc: record.upc,
             prices: {
+              // BGS prices
               bgs_10: parseFloat(record['bgs-10-price']) || null,
               bgs_95: parseFloat(record['box-only-price']) || null,
               bgs_7: parseFloat(record['cib-price']) || null,
+              
+              // CGC prices
               cgc_10: parseFloat(record['condition-17-price']) || null,
+              
+              // SGC prices
               sgc_10: parseFloat(record['condition-18-price']) || null,
+              
+              // Other graded prices
               graded_9: parseFloat(record['graded-price']) || null,
+              graded_8: parseFloat(record['new-price']) || null,
+              
+              // Ungraded price
               ungraded: parseFloat(record['loose-price']) || null,
+              
+              // PSA prices
               psa_10: parseFloat(record['manual-only-price']) || null,
-              graded_8: parseFloat(record['new-price']) || null
+              
+              // Additional metadata
+              console_name: record['console-name'],
+              genre: record.genre,
+              release_date: record['release-date'],
+              sales_volume: parseInt(record['sales-volume']) || null
             },
             timestamp: new Date().toISOString()
           };
@@ -64,7 +81,11 @@ const processCSV = async () => {
 
 const updatePrices = async (prices) => {
   try {
-    const token = process.env.ADMIN_TOKEN; // Set this in your environment
+    const token = process.env.ADMIN_TOKEN;
+    if (!token) {
+      throw new Error('ADMIN_TOKEN environment variable is not set');
+    }
+
     const response = await axios.post(`${API_URL}/prices/bulk`, prices, {
       headers: {
         'Authorization': `Bearer ${token}`,
